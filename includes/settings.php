@@ -7,6 +7,8 @@ class PTAP_Settings {
     function __construct() {
 
         add_action( 'admin_init', array( $this, 'add_settings_fields' ) );
+        add_action( 'update_option_' . post_type_archive_pages()::CONFIG_KEY, array( $this, 'updated_option' ) );
+        add_action( 'admin_init', array( $this, 'maybe_flush_rules' ) );
 
     }
 
@@ -65,6 +67,20 @@ class PTAP_Settings {
 
         </fieldset>
         <?php
+    }
+
+    public function updated_option() {
+
+        set_transient( 'ptap_flush_rules', 1 );
+
+    }
+
+    public function maybe_flush_rules() {
+
+        if ( delete_transient('ptap_flush_rules') ) {
+            flush_rewrite_rules();
+        }
+
     }
 
 }
