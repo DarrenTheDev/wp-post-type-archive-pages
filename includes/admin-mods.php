@@ -50,7 +50,10 @@ class PTAP_Admin_Mods {
         if ( !$post_type )
             return;
 
-        echo '<div class="notice notice-warning inline"><p>You are currently editing the page that shows your ' . $post_type->label . ' archive.</p></div>';
+        $noticeText = __( 'You are currently editing the page that shows your %s archive.', 'post-type-archive-pages' );
+        $noticeText = sprintf( $noticeText, strtolower($post_type->label) );
+
+        printf( '<div class="notice notice-warning inline"><p>%s</p></div>', $noticeText );
 
     }
 
@@ -58,9 +61,13 @@ class PTAP_Admin_Mods {
 
         $post_type = post_type_archive_pages()->get_archive_page_post_type( $post->ID );
 
-        if ( $post_type ) {
-			$post_states['ptap_archive_page'] = $post_type->label . ' Archive Page';
-        }
+        if ( !$post_type )
+            return $post_states;
+
+        $stateText = __( '%s Archive Page', 'post-type-archive-pages' );
+        $stateText = sprintf( $stateText, $post_type->label );
+
+        $post_states['ptap_archive_page'] = $stateText;
         
         return $post_states;
 

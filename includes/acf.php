@@ -12,11 +12,13 @@ class PTAP_ACF{
 
     function acf_page_types_options( $choices ) {
 
-        $choices[ 'archive' ] = ' Archive Page';
+        $archivePageText = __( 'Archive Page', 'post-type-archive-pages' );
+
+        $choices[ 'archive' ] = $archivePageText;
 
         foreach ( post_type_archive_pages()->get_supported_post_types() as $post_type ) {
 
-            $choices[ 'archive_' . $post_type->name ] = ' Archive Page: ' . $post_type->label;
+            $choices[ 'archive_' . $post_type->name ] = $archivePageText . ': ' . $post_type->label;
 
         }
 

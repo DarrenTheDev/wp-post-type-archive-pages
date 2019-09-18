@@ -6,6 +6,8 @@
  * Author:            Darren Grant
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * Text Domain:       post-type-archive-pages
+ * Domain Path: /lang
  */
 
 if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -14,24 +16,28 @@ class Post_Type_Archive_Pages {
 
     protected static $_instance = null;
 
-    private $supported_post_types = null;
-
     const CONFIG_KEY = 'ptap_archive_pages';
+
+    public $basename;
 
     public function includes() {
 
         require plugin_dir_path( __FILE__ ) . 'includes/settings.php';
         require plugin_dir_path( __FILE__ ) . 'includes/admin-mods.php';
         require plugin_dir_path( __FILE__ ) . 'includes/permalinks.php';
+        require plugin_dir_path( __FILE__ ) . 'includes/l10n.php';
         require plugin_dir_path( __FILE__ ) . 'includes/acf.php';
 
     }
 
     public function initialise() {
 
+        $this->basename = plugin_basename(__FILE__);
+
         new PTAP_Settings();
         new PTAP_Permalinks();
         new PTAP_Admin_Mods();
+        new PTAP_L10n();
         new PTAP_ACF();
 
     }
@@ -67,6 +73,9 @@ class Post_Type_Archive_Pages {
 
         if ( !$id )
             return null;
+        
+        if ( !$this->is_public_page($id) )
+            return null;
 
         $link = get_permalink( $id );
 
@@ -89,6 +98,9 @@ class Post_Type_Archive_Pages {
 
     public function is_archive_page( $page_id ) {
 
+        if ( !$this->is_public_page($page_id) )
+            return false;
+
         $post_type = array_search( $page_id, $this->get_config() );
 
         return ( $post_type ) ? true : false;
@@ -96,6 +108,9 @@ class Post_Type_Archive_Pages {
     }
 
     public function get_archive_page_post_type( $page_id ) {
+
+        if ( !$this->is_public_page($page_id) )
+            return null;
 
         $post_type = array_search( $page_id, $this->get_config() );
 
@@ -116,7 +131,13 @@ class Post_Type_Archive_Pages {
 		}
 
 		return self::$_instance;
-	}
+    }
+    
+    private function is_public_page( $page_id ) {
+
+        return in_array( get_post_status( $page_id ), array( 'publish' ) );
+
+    }
 
 }
 

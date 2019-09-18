@@ -1,0 +1,35 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Post Type Archive Pages\n"
+"POT-Creation-Date: 2019-09-18 22:01+0930\n"
+"PO-Revision-Date: 2019-09-18 22:01+0930\n"
+"Last-Translator: \n"
+"Language-Team: Darren Grant\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2.3\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: lang\n"
+
+#: includes/acf.php:15
+msgid "Archive Page"
+msgstr ""
+
+#: includes/admin-mods.php:53
+#, php-format
+msgid "You are currently editing the page that shows your %s archive."
+msgstr ""
+
+#: includes/admin-mods.php:67
+#, php-format
+msgid "%s Archive Page"
+msgstr ""
+
+#: includes/settings.php:26
+msgid "Archive Pages"
+msgstr ""
