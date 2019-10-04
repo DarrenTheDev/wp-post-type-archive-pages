@@ -34,14 +34,18 @@ class PTAP_Settings {
 
     function draw_fields() {
         ?>
+        <p>Select the page to display the archive for each of your post types.</p>
+        <br>
         <fieldset>
 
             <?php foreach( $this->supported_post_types as $post_type ) : ?>
 
                 <?php
+                $archive_page = post_type_archive_pages()->get_archive_page( $post_type->name );
+
                 $field_name = post_type_archive_pages()::CONFIG_KEY . '[' . $post_type->name . ']';
                 $field_label = $post_type->label;
-                $field_value = post_type_archive_pages()->get_archive_page_id( $post_type->name )
+                $field_value = $archive_page ? $archive_page->ID : '';
                 ?>
 
                 <label for="<?php echo $field_name ?>">

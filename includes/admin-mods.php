@@ -21,7 +21,7 @@ class PTAP_Admin_Mods {
 
         $post_type = get_post_type($post_id);
 
-        if ( $post_type !== 'page' || !post_type_archive_pages()->is_archive_page($post_id) )
+        if ( $post_type !== 'page' || !post_type_archive_pages()->get_archive_page_post_type($post_id) )
             return;
 
         remove_post_type_support('page', 'editor');  
@@ -33,7 +33,7 @@ class PTAP_Admin_Mods {
         if ( !$post )
             return $templates;
 
-        if ( post_type_archive_pages()->is_archive_page($post->ID) )
+        if ( post_type_archive_pages()->get_archive_page_post_type($post->ID) )
             return null;
 
         return $templates;

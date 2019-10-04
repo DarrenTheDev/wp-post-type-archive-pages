@@ -5,8 +5,8 @@ class PTAP_ACF{
 
     function __construct() {
 
-        add_filter( 'acf/location/rule_values/page_type', [ $this, 'acf_page_types_options' ] );
-        add_filter( 'acf/location/rule_match/page_type', [ $this, 'acf_page_types_match' ], 10, 3);
+        add_filter( 'acf/location/rule_values/page_type', array( $this, 'acf_page_types_options' ) );
+        add_filter( 'acf/location/rule_match/page_type', array( $this, 'acf_page_types_match' ), 10, 3);
 
     }
 
@@ -28,7 +28,7 @@ class PTAP_ACF{
 
     function acf_page_types_match( $match, $rule, $options ) {
 
-        if ( !isset( $options['post_id'] ) )
+        if ( !isset( $options['post_id'] ) ) 
             return $match;
 
         $archiveType = post_type_archive_pages()->get_archive_page_post_type( $options['post_id'] );

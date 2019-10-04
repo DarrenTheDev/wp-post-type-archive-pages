@@ -7,8 +7,8 @@ class PTAP_Permalinks {
     function __construct()
     {
         
-        add_filter( 'register_post_type_args', [ $this, 'set_post_type_archive' ], 10, 2 );
-        add_filter( 'register_taxonomy_args', [ $this, 'set_taxonomy_archive' ], 10, 3 );
+        add_filter( 'register_post_type_args', array( $this, 'set_post_type_archive' ), 10, 2 );
+        add_filter( 'register_taxonomy_args', array( $this, 'set_taxonomy_archive' ), 10, 3 );
 
         add_action( 'update_option_' . post_type_archive_pages()::CONFIG_KEY, array( $this, 'updated_option' ) );
         add_action( 'post_updated', array( $this, 'updated_post' ), 10, 3 );
@@ -42,6 +42,8 @@ class PTAP_Permalinks {
         if ( is_array( $object_type ) )
             $object_type = ( count($object_type) === 1 ) ? $object_type[0] : null;
 
+        $object_type = apply_filters( 'post_type_archive_pages/taxonomy_post_type', $object_type, $taxonomy );
+
         if ( !$object_type )
             return $args;
 
@@ -70,7 +72,7 @@ class PTAP_Permalinks {
         if ( $post_after->post_type !== 'page' )
             return;
 
-        if ( !post_type_archive_pages()->is_archive_page( $post_ID ) )
+        if ( !post_type_archive_pages()->get_archive_page_post_type( $post_ID ) )
             return;
             
         if ( $post_after->post_name === $post_before->post_name && $post_after->post_status === $post_before->post_status )

@@ -12,6 +12,8 @@
 
 if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
+if( ! class_exists('Post_Type_Archive_Pages') ) :
+
 class Post_Type_Archive_Pages {
 
     protected static $_instance = null;
@@ -67,43 +69,36 @@ class Post_Type_Archive_Pages {
 
     }
 
-    public function get_route( $slug ) {
+    public function get_archive_page( $slug = null ) {
 
-        $id = $this->get_archive_page_id( $slug );
+        if ( !$slug ) {
 
-        if ( !$id )
-            return null;
-        
-        if ( !$this->is_public_page($id) )
-            return null;
+            if ( is_post_type_archive() ) {
 
-        $link = get_permalink( $id );
+                $slug = get_query_var('post_type');
 
-        if ( !$link )
-            return null;
+            } elseif ( is_singular() ) {
 
-        $slug = str_replace( home_url(), '', $link );
+                $slug = get_post_type();
 
-        return trim( $slug, '/' );
+            } elseif ( is_tax() ) {
 
-    }
+                $taxonomy = get_taxonomy( get_query_var('taxonomy') );
+                $slug = ( count($taxonomy->object_type) === 1 ) ? $taxonomy->object_type[0] : null;
+                $slug = apply_filters( 'post_type_archive_pages/taxonomy_post_type', $slug, $taxonomy->name );
 
-    public function get_archive_page_id( $slug ) {
+            } else {
+
+                return null;
+
+            }
+
+        }
 
         $config = $this->get_config();
+        $page_id = isset( $config[$slug] ) ? $config[$slug] : null;
 
-        return isset( $config[$slug] ) ? $config[$slug] : null;
-
-    }
-
-    public function is_archive_page( $page_id ) {
-
-        if ( !$this->is_public_page($page_id) )
-            return false;
-
-        $post_type = array_search( $page_id, $this->get_config() );
-
-        return ( $post_type ) ? true : false;
+        return $page_id ? get_page($page_id) : null;
 
     }
 
@@ -118,6 +113,27 @@ class Post_Type_Archive_Pages {
             return null;
 
         return get_post_type_object( $post_type );
+
+    }
+
+    public function get_route( $slug ) {
+
+        $archive_page = $this->get_archive_page( $slug );
+
+        if ( !$archive_page )
+            return null;
+        
+        if ( !$this->is_public_page( $archive_page->ID ) )
+            return null;
+
+        $link = get_permalink( $archive_page );
+
+        if ( !$link )
+            return null;
+
+        $slug = str_replace( home_url(), '', $link );
+
+        return trim( $slug, '/' );
 
     }
 
@@ -147,3 +163,5 @@ function post_type_archive_pages() {
 }
 
 post_type_archive_pages();
+
+endif; // class_exists check
