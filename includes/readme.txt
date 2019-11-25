@@ -32,6 +32,10 @@ e.g. `post_type_archive_pages()->get_archive_page('book')`
 Returns the post type object that the provided page ID is the archive page for.
 e.g. `post_type_archive_pages()->get_archive_page_post_type(5)`
 
+= Menu - Enhancements =
+
+Post Type archive pages added to the menu will be marked as the current menu item when viewing the post type archive and the current menu item's parent / ancestor when viewing a post of that type. The related CSS classes will also be applied.
+
 = Advanced Custom Fields - Enhancements =
 
 This plugin is particularly effective when paired with [Advanced Custom Fields](https://www.advancedcustomfields.com/). It registers additional *page type* location rules allowing you to add fields to all archive pages or the archive page for a particular post type. So if your listing page requires content like a description or header image you can place fields for those on the archive page itself.
