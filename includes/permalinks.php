@@ -18,7 +18,7 @@ class PTAP_Permalinks {
 
     public function set_post_type_archive( $args, $name ) {
 
-        $archiveRoute = post_type_archive_pages()->get_route($name);
+        $archiveRoute = post_type_archive_pages()->get_archive_route($name);
 
         if ( !$archiveRoute )
             return $args;
@@ -47,7 +47,7 @@ class PTAP_Permalinks {
         if ( !$object_type )
             return $args;
 
-        $archiveRoute = post_type_archive_pages()->get_route( $object_type );
+        $archiveRoute = post_type_archive_pages()->get_archive_route( $object_type );
 
         if ( !$archiveRoute )
             return $args;

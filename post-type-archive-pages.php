@@ -28,6 +28,7 @@ class Post_Type_Archive_Pages {
         require plugin_dir_path( __FILE__ ) . 'includes/admin-mods.php';
         require plugin_dir_path( __FILE__ ) . 'includes/permalinks.php';
         require plugin_dir_path( __FILE__ ) . 'includes/l10n.php';
+        require plugin_dir_path( __FILE__ ) . 'includes/menus.php';
         require plugin_dir_path( __FILE__ ) . 'includes/acf.php';
 
     }
@@ -40,6 +41,7 @@ class Post_Type_Archive_Pages {
         new PTAP_Permalinks();
         new PTAP_Admin_Mods();
         new PTAP_L10n();
+        new PTAP_Menus();
         new PTAP_ACF();
 
     }
@@ -65,11 +67,19 @@ class Post_Type_Archive_Pages {
 
     function get_config() {
 
-        return get_option( self::CONFIG_KEY );
+        return get_option( self::CONFIG_KEY, [] );
 
     }
 
     public function get_archive_page( $slug = null ) {
+
+        $page_id = $this->get_archive_page_id( $slug );
+
+        return $page_id ? get_page($page_id) : null;
+
+    }
+
+    public function get_archive_page_id( $slug = null ) {
 
         if ( !$slug ) {
 
@@ -96,9 +106,7 @@ class Post_Type_Archive_Pages {
         }
 
         $config = $this->get_config();
-        $page_id = isset( $config[$slug] ) ? $config[$slug] : null;
-
-        return $page_id ? get_page($page_id) : null;
+        return isset( $config[$slug] ) ? $config[$slug] : null;
 
     }
 
@@ -116,7 +124,7 @@ class Post_Type_Archive_Pages {
 
     }
 
-    public function get_route( $slug ) {
+    public function get_archive_route( $slug ) {
 
         $archive_page = $this->get_archive_page( $slug );
 

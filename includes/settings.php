@@ -41,11 +41,9 @@ class PTAP_Settings {
             <?php foreach( $this->supported_post_types as $post_type ) : ?>
 
                 <?php
-                $archive_page = post_type_archive_pages()->get_archive_page( $post_type->name );
-
                 $field_name = post_type_archive_pages()::CONFIG_KEY . '[' . $post_type->name . ']';
                 $field_label = $post_type->label;
-                $field_value = $archive_page ? $archive_page->ID : '';
+                $field_value = post_type_archive_pages()->get_archive_page_id( $post_type->name );
                 ?>
 
                 <label for="<?php echo $field_name ?>">
