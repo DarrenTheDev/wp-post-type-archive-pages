@@ -2,7 +2,7 @@
 
 class PTAP_Permalinks {
 
-    private $transient_name;
+    private $transient_name = 'ptap_flush_rewrites';
 
     function __construct()
     {
