@@ -13,8 +13,8 @@ class PTAP_Admin_Mods {
 
     function hide_editor() {
 
-        $action = isset($_GET['action']) ? $_GET['action'] : null;
-        $post_id = isset($_GET['post']) ? $_GET['post'] : null;
+        $action = isset($_GET['action']) ? sanitize_text_field($_GET['action']) : null;
+        $post_id = isset($_GET['post']) ? intval($_GET['post']) : null;
 
         if ( $action !== 'edit' || !$post_id )
             return;
