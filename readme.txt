@@ -22,7 +22,7 @@ WordPress will look for archive page templates for the pages that you set as arc
 
 There are also a few functions available that may be helpful in building themes. They are accessed on the plugin's main instance, which is returned by a call to *post_type_archive_pages()*.
 
-= get_archive_page( string $slug = null ) =
+= get_archive_page =
 
 Returns the page object for the archive page of the provided post type slug. If called from a post type archive template, a singular template or a term archive and a slug isn't provided, the relative post type will be used. e.g. 
 
@@ -30,7 +30,7 @@ Returns the page object for the archive page of the provided post type slug. If 
 $page = post_type_archive_pages()->get_archive_page('book');
 `
 
-= get_archive_page_post_type( integer $page_id ) =
+= get_archive_page_post_type =
 
 Returns the post type object that the provided page ID is the archive page for. e.g. 
 
