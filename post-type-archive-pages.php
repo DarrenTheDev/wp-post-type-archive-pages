@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Post Type Archive Pages
  * Description:       Set the archive for your custom post types to a page within your pages structure.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Author:            Darren Grant
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
