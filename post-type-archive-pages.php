@@ -67,7 +67,13 @@ class Post_Type_Archive_Pages {
 
     function get_config() {
 
-        return get_option( self::CONFIG_KEY, [] );
+        $config = get_option( self::CONFIG_KEY );
+
+        if ( is_array($config) ) {
+            return $config;
+        }
+
+        return [];
 
     }
 
